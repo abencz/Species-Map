@@ -453,7 +453,7 @@ function fbuildqs(ary) {
 // use this section to pass in your parameters from the url
 var url_inparam = {};
 var url_paramary = window.location.search.substring(1).split("&");
-url_paramary.push("color=#328cc1")
+url_paramary.push("color=%23328cc1", "captive=false", "photos=true");
 // this part can extract the individual values from each parameter, if needed
 for (var p=0; p<url_paramary.length; p++) {
    if (url_paramary[p] === "") { continue; };
@@ -488,19 +488,19 @@ var l_inat_cheat = L.tileLayer(s_inat_url+'colored_heatmap/{z}/{x}/{y}.png'+inat
 // Create iNaturalist UTFGrids and pair each with an observation tileset from above (skip heatmap, since there aren't distinct points in that)
 function fpopup(obs) {
    var s = (obs.photos.length==0) ? '[No Photo]' : '<img src="'+obs.photos[0].url+'" />';
-   s += (obs.photos.length>1) ? ' ['+obs.photos.length+']' : '';
+//   s += (obs.photos.length>1) ? ' ['+obs.photos.length+']' : '';
    s += '<br />observation #: <a target="_blank" href="'+obs.uri+'">'+obs.id+'</a> (grade: '+obs.quality_grade+')';
    s += '<br />taxon: ' + ((obs.taxon==null) ? '[Unknown]' : (obs.taxon.preferred_common_name+' ('+obs.taxon.name+')'));
-   s += '<br />observer: '+obs.user.login
-      + '<br />location: '+obs.place_guess
-      + '<br />coordinates: '+Math.round(obs.geojson.coordinates[1]*1000000)/1000000+', '+Math.round(obs.geojson.coordinates[0]*1000000)/1000000;
+//   s += '<br />observer: '+obs.user.login
+   s += '<br />location: '+obs.place_guess
+//      + '<br />coordinates: '+Math.round(obs.geojson.coordinates[1]*1000000)/1000000+', '+Math.round(obs.geojson.coordinates[0]*1000000)/1000000;
    s += (obs.positional_accuracy==null) ? '' : ' ('+Math.round(obs.positional_accuracy*10)/10+'m)';
    s += '<br />observed: '+((obs.time_observed_at==null) ? ((obs.observed_on==null) ? '[Unknown]': obs.observed_on) : obs.time_observed_at.replace('T',' '));
-   s += '<br />created: '+((obs.created_at==null) ? obs.created_at_details.date : obs.created_at.replace('T',' '));
-   s += '<br />last updated: '+obs.updated_at.replace('T',' ');
-   if (obs.description==null) {}
-   else if (obs.description.length < 200) {s += '<br />'+obs.description }
-   else {s += '<br />'+(obs.description.substring(0,200)+'... (more)')};
+//   s += '<br />created: '+((obs.created_at==null) ? obs.created_at_details.date : obs.created_at.replace('T',' '));
+//   s += '<br />last updated: '+obs.updated_at.replace('T',' ');
+//   if (obs.description==null) {}
+//   else if (obs.description.length < 200) {s += '<br />'+obs.description }
+//   else {s += '<br />'+(obs.description.substring(0,200)+'... (more)')};
    L.popup().setLatLng([obs.geojson.coordinates[1],obs.geojson.coordinates[0]])
       .setContent(s).openOn(mymap);
 };
@@ -518,7 +518,7 @@ u_inat_pts.on("click", function(e) { // "mouseover" and "mouseout" events not us
        }, true);
    };
 });
-var g_inat_pts = L.layerGroup([l_inat_pts, u_inat_pts]); // pair the UTFGrid with its map tile set.
+// var g_inat_pts = L.layerGroup([l_inat_pts, u_inat_pts]); // pair the UTFGrid with its map tile set.
 
 var u_inat_cheat = L.utfGrid(s_inat_url+'colored_heatmap/{z}/{x}/{y}.grid.json'+inat_query_string,{maxZoom:20});//no attribution here because it won't ever exist on its own
 u_inat_cheat.on("click", function(e) { // "mouseover" and "mouseout" events not used here
@@ -546,8 +546,8 @@ var inat_taxon_id = url_inparam.taxon_id; //integer
 
 // create map, and set default center coordinates, zoom level, and layers
 var mymap = L.map('mapid', {
-   center: [43.75, -72.5],
-   zoom: 6,
+   center: [45, -18],
+   zoom: 3,
    layers: [l_carto_light, g_inat_cheat],
    doubleClickZoom: false
 });
