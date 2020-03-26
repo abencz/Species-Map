@@ -495,7 +495,7 @@ function fpopup(obs) {
    s += '<br />location: '+obs.place_guess
 //      + '<br />coordinates: '+Math.round(obs.geojson.coordinates[1]*1000000)/1000000+', '+Math.round(obs.geojson.coordinates[0]*1000000)/1000000;
    s += (obs.positional_accuracy==null) ? '' : ' ('+Math.round(obs.positional_accuracy*10)/10+'m)';
-   s += '<br />observed: '+((obs.time_observed_at==null) ? ((obs.observed_on==null) ? '[Unknown]': obs.observed_on) : obs.time_observed_at.replace('T',' '));
+   s += '<br />observed: '+((obs.time_observed_at==null) ? ((obs.observed_on==null) ? '[Unknown]': obs.observed_on) : obs.time_observed_at.slice(0, 10));
 //   s += '<br />created: '+((obs.created_at==null) ? obs.created_at_details.date : obs.created_at.replace('T',' '));
 //   s += '<br />last updated: '+obs.updated_at.replace('T',' ');
 //   if (obs.description==null) {}
