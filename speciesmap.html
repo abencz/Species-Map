@@ -489,7 +489,7 @@ var l_inat_cheat = L.tileLayer(s_inat_url+'colored_heatmap/{z}/{x}/{y}.png'+inat
 function fpopup(obs) {
    var s = (obs.photos.length==0) ? '[No Photo]' : '<img src="'+obs.photos[0].url+'" />';
 //   s += (obs.photos.length>1) ? ' ['+obs.photos.length+']' : '';
-   s += '<br />observation #: <a target="_blank" href="'+obs.uri+'">'+obs.id+'</a> (grade: '+obs.quality_grade+')';
+   s += '<br />observation #: <a target="_blank" href="'+obs.uri+'">'+obs.id+'</a>';
    s += '<br />taxon: ' + ((obs.taxon==null) ? '[Unknown]' : (obs.taxon.preferred_common_name+' ('+obs.taxon.name+')'));
 //   s += '<br />observer: '+obs.user.login
    s += '<br />location: '+obs.place_guess
@@ -501,7 +501,7 @@ function fpopup(obs) {
 //   if (obs.description==null) {}
 //   else if (obs.description.length < 200) {s += '<br />'+obs.description }
 //   else {s += '<br />'+(obs.description.substring(0,200)+'... (more)')};
-   L.popup().setLatLng([obs.geojson.coordinates[1],obs.geojson.coordinates[0]])
+   L.popup({maxWidth: 175, minWidth: 75}).setLatLng([obs.geojson.coordinates[1],obs.geojson.coordinates[0]])
       .setContent(s).openOn(mymap);
 };
 
@@ -546,8 +546,8 @@ var inat_taxon_id = url_inparam.taxon_id; //integer
 
 // create map, and set default center coordinates, zoom level, and layers
 var mymap = L.map('mapid', {
-   center: [45, -18],
-   zoom: 3,
+   center: [35, -18],
+   zoom: 1,
    layers: [l_carto_light, g_inat_cheat],
    doubleClickZoom: false
 });
